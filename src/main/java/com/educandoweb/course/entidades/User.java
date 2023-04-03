@@ -5,13 +5,14 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "tb_user")
 public class User implements Serializable {
@@ -24,6 +25,18 @@ public class User implements Serializable {
     private String email;
     private String phone;
     private String password;
+    @OneToMany(mappedBy = "client")
+    @ToString.Exclude
+    private List<Order> orders = new ArrayList <>();
+
+    public User ( Long id, String name, String email, String phone, String password, List <Order> orders ) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.orders = orders;
+    }
 
     @Override
     public boolean equals ( Object o ) {
